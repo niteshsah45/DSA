@@ -1,0 +1,8 @@
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+       if(nums.empty()) return 0;
+        nth_element(nums.begin(),nums.end()-k,nums.end());
+        return nums[nums.size()-k];
+    }
+};
