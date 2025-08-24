@@ -19,6 +19,7 @@ bool possiblebloomday(vector<int> &bloomDay,int mid,int m,int k){
 }
     int minDays(vector<int>& bloomDay, int m, int k) {
         int n=bloomDay.size();
+        if((long long)m*k>n) return -1;
         int low=*min_element(bloomDay.begin(),bloomDay.end());
         int high=*max_element(bloomDay.begin(),bloomDay.end());
         int store=-1;
