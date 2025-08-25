@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+int allocatepage(int arr[],int pages,int n){
+    int student=1;
+    int allopage=0;
+    for(int i=0;i<n;i++){
+        if(allopage+arr[i]<=pages){
+            allopage+=arr[i];
+        }
+        else{
+            student++;
+            allopage=arr[i];
+        }
+    }
+    return student;
+}
+int main(){
+    int n=5;
+    int std=4;
+    int arr[n]={25,46,28,49,24};
+    if(std>n) return 0;
+    int low=*max_element(arr,arr+n);
+    int high=accumulate(arr,arr+n,0);
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        int result= allocatepage(arr,mid,n);
+        if(result<=std){
+             high=mid-1;
+        }
+        else{
+            low=mid+1;
+        }
+    }
+    cout<<low;
+}
