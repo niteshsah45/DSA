@@ -1,34 +1,21 @@
 class Solution {
 public:
-string lowerCase(string s){
-    int len=s.size();
-    for(int i=0;i<len;i++){
-        if(s[i]>='A' && s[i]<='Z'){
-            s[i]+=32;
-        }
-    }
-    return s;
-
-}
     bool isPalindrome(string s) {
-        int len=s.size();
-        int j=0;
-        for(int i=0;i<len;i++){
+        string ans="";
+        int n=s.size();
+        for(int i=0;i<n;i++){
             if(isalnum(s[i])){
-                s[j]=s[i];
-                j++;
+                ans+=s[i];
             }
         }
-        s.resize(j);
-        string result= lowerCase(s);
-        int n=result.size();
-        int st=0,e=n-1;
-        while(st<e){
-            if(result[st]!=result[e]) return false;
-            else{
-                st++;
-                e--;
+        int n1=ans.size();
+        for(int i=0;i<n1;i++){
+            if(ans[i]>='A' && ans[i]<='Z'){
+                ans[i]+=32;
             }
+        }
+        for(int i=0;i<n1;i++){
+            if(ans[i]!=ans[n1-i-1]) return false;
         }
         return true;
     }
