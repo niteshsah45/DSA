@@ -1,28 +1,30 @@
 class Solution {
 public:
-int smallestdivisor(vector<int>& nums, int div){
-    int last=0;
-    for(int i=0;i<nums.size();i++){
-        last+=ceil((double)nums[i]/div);
+bool checkThreshold(vector<int> &nums,int mid,int threshold){
+    int sum=0;
+    int n=nums.size();
+    for(int i=0;i<n;i++){
+        sum+=ceil((double)nums[i]/mid);
     }
-    return last;
+    if(sum<=threshold){
+        return true;
+    }
+    else return false;
 }
     int smallestDivisor(vector<int>& nums, int threshold) {
         int n=nums.size();
-        int store=-1;
         int low=1;
         int high=*max_element(nums.begin(),nums.end());
         while(low<=high){
             int mid=low+(high-low)/2;
-            int result = smallestdivisor(nums,mid);
-            if(result<=threshold){
-                store=mid;
+            bool result= checkThreshold(nums,mid,threshold);
+            if(result){
                 high=mid-1;
             }
             else{
                 low=mid+1;
             }
         }
-        return store;   
+        return low;
     }
 };
