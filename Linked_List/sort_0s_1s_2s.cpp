@@ -28,8 +28,36 @@ void prints(Node* head){
         temp=temp->next;
     }
 }
+Node* sortDigit(Node* head){
+    int cnt0=0,cnt1=0,cnt2=0;
+    Node* temp=head;
+    while(temp!=NULL){
+        if(temp->data==0) cnt0++;
+        else if(temp->data==1) cnt1++;
+        else cnt2++;
+        temp=temp->next;
+    }
+    temp=head;
+    while(temp!=NULL){
+        if(cnt0){
+             temp->data=0;
+             cnt0--;
+        }
+        else if(cnt1) {
+            temp->data=1;
+            cnt1--;
+        }
+        else {
+            temp->data=2;
+            cnt2--;
+        }
+        temp=temp->next;
+    }
+    return head;
+};
 int main(){
     vector<int> arr{1,2,0,1,2,2,1,0,0};
     Node* head=convert2LL(arr);
+    head= sortDigit(head);
     prints(head);
 }
