@@ -8,18 +8,38 @@
  */
 class Solution {
 public:
+ListNode *collidePoint(ListNode * headA, ListNode *headB,int key){
+    ListNode* temp1=headA;
+    ListNode* temp2=headB;
+    while(key){
+        temp2=temp2->next;
+        key--;
+    }
+    while(temp1!=NULL && temp2!=NULL){
+        if(temp1==temp2) return temp1;
+        temp1=temp1->next;
+        temp2=temp2->next;
+    }
+    return nullptr;
+}
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         if(headA==NULL || headB==NULL) return nullptr;
         ListNode* temp1=headA;
         ListNode* temp2=headB;
-        unordered_set<ListNode*> st;
+        int n1=0,n2=0;
         while(temp1!=NULL){
-            st.insert(temp1);
+            n1++;
             temp1=temp1->next;
         }
         while(temp2!=NULL){
-            if(st.find(temp2)!=st.end()) return temp2;
+            n2++;
             temp2=temp2->next;
+        }
+        if(n1<n2){
+            return collidePoint(headA,headB,n2-n1);
+        }
+        else{
+            return collidePoint(headB,headA,n1-n2);
         }
         return nullptr;
     }
