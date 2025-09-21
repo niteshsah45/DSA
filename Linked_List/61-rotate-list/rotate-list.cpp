@@ -19,24 +19,25 @@ public:
             count++;
             temp=temp->next;
         }
+        if(k==count) return head;
+        if(k>count) k=k%count;
+        int last=count-k;
+        ListNode* tailAdd=head;
         temp=head;
-        vector<int> result(count);
-        int i=0;
-        while(temp!=NULL){
-            result[i]=temp->val;
+        while(temp->next!=NULL){
             temp=temp->next;
-            i++;
         }
-        int last=k%count;
-        reverse(result.begin(),result.end());
-        reverse(result.begin(),result.begin()+last);
-        reverse(result.begin()+last,result.end());
+        temp->next=tailAdd;
         temp=head;
-        int j=0;
+        long long cnt=0;
+        ListNode* newNode;
         while(temp!=NULL){
-            temp->val=result[j];
+            cnt++;
+            if(cnt==last){
+                 head=temp->next;
+                temp->next=nullptr;
+            }
             temp=temp->next;
-            j++;
         }
         return head;
     }
