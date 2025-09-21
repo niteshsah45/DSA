@@ -12,6 +12,7 @@ Node* convert2ll(vector<int>& arr){
     Node* head= new Node(arr[0]);
     Node* temp=head;
     unordered_map<int,Node*> store;
+    store[arr[0]]=head;
     for(int i=1;i<arr.size();i++){
         Node* mover=new Node(arr[i]);
         temp->next=mover;
@@ -23,15 +24,18 @@ Node* convert2ll(vector<int>& arr){
 };
 int lengthOfll(Node* head){
     Node* temp=head;
-    unordered_set<Node*> mpp;
+    unordered_map<Node*,int> mpp;
     int size=0;
-    while(temp!=NULL){
-        if(mpp.find(temp)!=mpp.end()) break;
-        mpp.insert(temp);
-        size++;
+    int i=1;
+    int firstVal;
+    while(temp!=nullptr){
+        if(mpp.find(temp)!=mpp.end()){
+            return i-mpp[temp];
+        }
+        mpp[temp]=i++;
         temp=temp->next;
     }
-    return size;
+    return 0;
 };
 int main(){
     vector<int> arr{1,2,3,4,5,6,7,8,9};
