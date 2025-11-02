@@ -1,16 +1,14 @@
 class Solution {
 public:
     int numSubarraysWithSum(vector<int>& nums, int goal) {
-        map<int,int> mpp;
+        unordered_map<int,int> mpp;
         mpp[0]=1;
-        int sum=0;
-        int count=0;
-        for(auto num:nums){
-            sum+=num;
-            if(mpp.find(sum-goal)!=mpp.end()){
-                count+=mpp[sum-goal];
-            }
-            mpp[sum]++;
+        int preSum=0,count=0;
+        for(int i=0;i<nums.size();i++){
+            preSum+=nums[i]; // add current number in the sum
+            int remove = preSum-goal; // check for subarray pattern after removing some digit;
+            count+=mpp[remove]; // increase the count of the subarray
+            mpp[preSum]+=1; // increase the number of sum happened
         }
         return count;
     }
