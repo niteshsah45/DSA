@@ -1,35 +1,37 @@
 class Solution {
 public:
-bool checkAnna(string& key,string& p){
-    vector<int> freq(26,0);
-
-    for(char ch:key){
-        freq[ch-'a']++;
-    }
-    for(char ch:p){
-        freq[ch-'a']--;
-    }
-    for(int x:freq){
-        if(x!=0) return false;
-    }
-    return true;
-
-}
     vector<int> findAnagrams(string s, string p) {
-        int n1 = s.size();
-        int n2 = p.size();
-        int start =0;
-        int end = n2-1;
         vector<int> ans;
-        while(start<n1){
-            string key = s.substr(start,n2);
-            bool result = checkAnna(key,p);
-            if(result){ 
-                ans.push_back(start);
+        int n = s.size();
+        int m = p.size();
+        if(m>n) return ans;
+        vector<int> freq(26,0);
 
+        for(char ch:p){
+            freq[ch-'a']++;
+        }
+        int left=0,right =0,matchedChar =0;
+        while(right<n){
+
+            if(freq[s[right]-'a']>0){
+                matchedChar++;
             }
-            start++;
+            freq[s[right]-'a']--;
+            right++;
+
+            if(right-left>m){
+                if(freq[s[left]-'a']>=0){
+                    matchedChar--;
+                }
+                freq[s[left]-'a']++;
+                left++;
+            }
+
+            if(matchedChar == m){
+                ans.push_back(left);
+            }
         }
         return ans;
+
     }
 };
