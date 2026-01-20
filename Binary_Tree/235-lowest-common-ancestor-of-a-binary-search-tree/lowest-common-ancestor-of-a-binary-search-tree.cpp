@@ -10,28 +10,22 @@
 
 class Solution {
 public:
-TreeNode* findLowest(TreeNode* root, TreeNode* p,TreeNode* q){
+TreeNode* findLcaNode(TreeNode* root, TreeNode* p, TreeNode* q){
 
-    if(root== NULL || root==p || root==q){
-        return root;
-    }
+    if(!root) return NULL;
 
-    TreeNode* left = findLowest(root->left,p,q);
-    TreeNode* right = findLowest(root->right,p,q);
+    if(root->val>p->val && root->val>q->val){
+       return  findLcaNode(root->left,p,q);
+    }
+    if(root->val<p->val && root->val<q->val){
 
-    if(left==NULL){
-        return right;
+        return findLcaNode(root->right,p,q);
     }
-    else if(right==NULL){
-        return left;
-    }
-    else{
-        return root;
-    }
+    return root;
 }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 
-        return findLowest(root,p,q);
+        return findLcaNode(root,p,q);
         
     }
 };
