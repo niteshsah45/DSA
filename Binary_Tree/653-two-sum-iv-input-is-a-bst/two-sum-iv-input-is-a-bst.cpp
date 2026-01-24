@@ -11,37 +11,32 @@
  */
 class Solution {
 public:
-void traversal(TreeNode* root, vector<int>& result){
-
+void preorder(TreeNode* root,vector<int>& result){
     if(!root) return;
 
-    traversal(root->left,result);
+    preorder(root->left,result);
     result.push_back(root->val);
-    traversal(root->right,result);
+    preorder(root->right,result);
 }
     bool findTarget(TreeNode* root, int k) {
-        
 
-        if(!root) return NULL;
         vector<int> result;
-        traversal(root,result);
+        preorder(root,result);
 
-        int end = result.size()-1;
-        int start =0;
+        int n = result.size();
+        int start=0,end=n-1;
 
         while(start<end){
-
-            if(result[start]+result[end]==k) return true;
-
-            else if(result[start]+result[end]>k){
+            int sum = result[start]+result[end];
+            if(sum==k) return true;
+            else if(sum>k){
                 end--;
             }
             else{
                 start++;
             }
-
         }
         return false;
-
+        
     }
 };
