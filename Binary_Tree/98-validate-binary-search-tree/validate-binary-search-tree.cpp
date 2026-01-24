@@ -6,28 +6,28 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 public:
-bool valid(TreeNode* root, long long left, long long right){
+    void preorder(TreeNode* root, vector<int>& result) {
+        if (!root)
+            return;
 
-    if(!root) return true;
-
-    if(root->val <= left || root->val >= right) return false;
-        return valid(root->left,left,root->val) && valid(root->right,root->val,right);
-}
+        preorder(root->left, result);
+        result.push_back(root->val);
+        preorder(root->right, result);
+    }
     bool isValidBST(TreeNode* root) {
-        
-        long long left = LLONG_MIN;
-        long long right = LLONG_MAX;
 
-        // if(!root->left && !root->right){
-        //     return true;
-        // }
+        vector<int> result;
+        preorder(root, result);
 
-        return valid(root,left,right);
-
+        for (int i = 0; i < result.size()-1; i++) {
+            if (result[i]>=result[i + 1]) return false;
+        }
+        return true;
     }
 };
