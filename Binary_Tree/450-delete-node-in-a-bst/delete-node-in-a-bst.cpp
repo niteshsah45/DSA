@@ -11,60 +11,62 @@
  */
 class Solution {
 public:
- TreeNode* helper(TreeNode* root){
 
-            if(root->left==NULL){
-                return root->right;
-            }
-            if(root->right==NULL){
-                return root->left;
-            }
-            TreeNode* rightPart = root->right;
-            TreeNode* lastRight = findLastRight(root->left);
-            lastRight->right = rightPart;
-            return root->left;
+TreeNode* helper(TreeNode* root){
+
+    if(root->left==NULL){
+        return root->right;
+    }
+    if(root->right==NULL){
+        return root->left;
+    }
+
+    TreeNode* rightpart = root->right;
+    TreeNode* rightLast = findLast(root->left);
+    rightLast->right=rightpart;
+    return root->left;
 }
+TreeNode* findLast(TreeNode* root){
 
- TreeNode* findLastRight(TreeNode* root){
-            if(root->right==NULL) return root;
-           return  findLastRight(root->right);
- }
-
+    if(root->right==NULL) return root;
+    return findLast(root->right); 
+}
     TreeNode* deleteNode(TreeNode* root, int key) {
 
+
         if(!root) return NULL;
-        if(root->left==NULL && root->right==NULL && root->val==key) return NULL;
+
+        if(!root->left && !root->right && root->val==key) return NULL;
 
         TreeNode* dummy = root;
-
         if(root->val==key){
+
             return helper(root);
         }
 
         while(root!=NULL){
 
-            if(root->val > key){
-                if(root->left!=NULL && root->left->val==key){
+            if(root->val>key){
+
+                if(root->left && root->left->val==key){
 
                     root->left = helper(root->left);
-                    break;
                 }
                 else{
-                    root= root->left;
+                    root=root->left;
                 }
             }
             else{
-
-                if(root->right!=NULL && root->right->val==key){
+                if(root->right && root->right->val==key){
 
                     root->right = helper(root->right);
-                    break;
                 }
                 else{
                     root=root->right;
                 }
             }
         }
-        return dummy; 
+        return dummy;
+        
     }
 };
