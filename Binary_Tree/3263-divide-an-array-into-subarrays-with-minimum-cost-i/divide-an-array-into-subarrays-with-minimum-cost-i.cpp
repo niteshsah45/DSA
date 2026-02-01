@@ -2,12 +2,19 @@ class Solution {
 public:
     int minimumCost(vector<int>& nums) {
 
-        int n = nums.size();
+        int first = nums[0];
 
-        sort(nums.begin()+1,nums.end());
+        int maxleft=nums[1];
 
-        int mini = nums[0]+nums[1]+nums[2];
-        return mini;
+        int ans = INT_MAX;
+
+        for(int j=2;j<nums.size();j++){
+
+            ans = min(ans,maxleft+nums[j]);
+
+            maxleft = min(maxleft,nums[j]);
+        }
+        return first+ans;
         
     }
 };
