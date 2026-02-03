@@ -11,21 +11,28 @@
  */
 class Solution {
 public:
-bool valid(TreeNode* root,long long left,long long right){
+void storepre(TreeNode* root,vector<int>& pre){
 
-    if(!root) return true;
 
-    if(root->val<=left || root->val>=right) return false;
-
-    return valid(root->left,left,root->val) && valid(root->right,root->val,right);
+    if(!root) return;
+    storepre(root->left,pre);
+    pre.push_back(root->val);
+    storepre(root->right,pre);
 }
     bool isValidBST(TreeNode* root) {
-        
-        if(!root) return true;
 
-        long long left = LLONG_MIN;
-        long long right = LLONG_MAX;
 
-        return valid(root,left,right);
+        vector<int> preorder;
+
+        storepre(root,preorder);
+
+        int n = preorder.size();
+        for(int i=0;i<n-1;i++){
+
+            if(preorder[i]>=preorder[i+1]) return false;
+        }
+
+        return true;
+
     }
 };
