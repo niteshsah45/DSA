@@ -11,31 +11,36 @@
  */
 class Solution {
 public:
-void inorder(vector<int>& result,TreeNode* root){
+
+void inorderStore(TreeNode* root,vector<int>& inorder){
 
     if(!root) return;
 
-    inorder(result,root->left);
-    result.push_back(root->val);
-    inorder(result,root->right);
+    inorderStore(root->left,inorder);
+    inorder.push_back(root->val);
+    inorderStore(root->right,inorder);
 }
-TreeNode* balanceTree(vector<int>& result,int start,int end){
 
-    if(start>end) return NULL;
+TreeNode* buildTree(vector<int>& inorder,int start,int end){
+
+    if(start>end){
+        return NULL;
+    }
 
     int mid = start+(end-start)/2;
-    TreeNode* root = new TreeNode(result[mid]);
-    root->left= balanceTree(result,start,mid-1);
-    root->right = balanceTree(result,mid+1,end);
+
+    TreeNode* root = new TreeNode(inorder[mid]);
+    root->left = buildTree(inorder,start,mid-1);
+    root->right = buildTree(inorder,mid+1,end);
     return root;
 }
     TreeNode* balanceBST(TreeNode* root) {
 
-        vector<int> result;
+        vector<int> inorder;
 
-        inorder(result,root);
+        inorderStore(root,inorder);
 
-        return balanceTree(result,0,result.size()-1);
- 
+       return  buildTree(inorder,0,inorder.size()-1);
+        
     }
 };
