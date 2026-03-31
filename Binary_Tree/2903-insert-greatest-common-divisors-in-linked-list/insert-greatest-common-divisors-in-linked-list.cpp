@@ -17,9 +17,12 @@ int findGreat(int a, int b){
     else min = b;
     int ans =1;
 
-    for(int i=1;i<=min;i++){
+    for(int i=min;i>=1;i--){
 
-        if(a%i==0 && b%i==0) ans=i;
+        if(a%i==0 && b%i==0){
+            ans = i;
+            break;
+        }
     }
     return ans;
 }
