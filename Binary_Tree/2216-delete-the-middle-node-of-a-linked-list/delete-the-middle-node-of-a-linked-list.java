@@ -11,29 +11,34 @@
 class Solution {
     public ListNode deleteMiddle(ListNode head) {
 
-        if(head==null || head.next==null) return null;
-
-
         int count =0;
-
         ListNode temp = head;
+
+        if(head==null || head.next == null) return null;
+
         while(temp!=null){
             count++;
             temp = temp.next;
         }
 
-        int mid = count/2;
-        int idx=0;
+        int mid = count/2+1;
 
         temp = head;
-        while(temp!=null){
 
-            idx++;
-            if(idx==mid){
-                temp.next = temp.next.next;
-                break;
+        ListNode prev = null;
+
+        while(temp!=null){
+            mid--;
+            if(mid==1 && temp.next!=null){
+                    temp.next = temp.next.next;
+                    return head;
+            }
+            else if(mid==1 && temp.next==null){
+                temp.next=null;
+                return head;
             }
             temp = temp.next;
+
         }
         return head;
         
