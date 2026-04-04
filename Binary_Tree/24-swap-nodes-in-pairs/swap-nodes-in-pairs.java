@@ -13,40 +13,22 @@ class Solution {
 
         if(head==null || head.next==null) return head;
 
-        ListNode temp = head;
+        ListNode dummy = new ListNode(0,head);
 
-        int count =0;
-        while(temp!=null){
-            count++;
-            temp = temp.next;
+        ListNode prev = dummy;
+        
+        while(prev.next!=null && prev.next.next!=null){
+
+            ListNode first = prev.next;
+            ListNode second = first.next;
+
+            first.next = second.next;
+            second.next = first;
+            prev.next = second;
+
+            prev = first;
         }
-        temp =head;
-
-        int prevlast = temp.val;
-        int prevfirst = temp.next.val;
-
-        boolean check = true;
-
-        while(temp!=null && temp.next!=null){ 
-
-            prevfirst = temp.next.val;
-            
-
-            if(check){
-                prevlast = temp.val;
-                 temp.val=prevfirst;
-            }
-            else{
-                temp.val=prevlast;
-            }
-            check=!check;
-
-            temp=temp.next;
-        }
-
-        if(count%2==0) temp.val = prevlast;
-
-        return head;
+        return dummy.next;
         
     }
 }
