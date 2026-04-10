@@ -2,19 +2,20 @@ class Solution {
 public:
     bool canJump(vector<int>& nums) {
 
+
+        int ans =0;
+
         int n = nums.size();
-
-        if( n==1 && nums[0]==0) return true;
-
-        int maxi =0;
 
         for(int i=0;i<n;i++){
 
-            maxi = max(maxi,i+nums[i]);
+            ans = max(ans,i+nums[i]);
 
-            if(i!=n-1 && nums[i]==0 && i>=maxi) return false;
+            if(nums[i]==0 && i>=ans && i!=n-1) return false;
+
         }
-        
+
         return true;
+        
     }
 };
