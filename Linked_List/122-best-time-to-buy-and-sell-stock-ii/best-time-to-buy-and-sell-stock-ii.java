@@ -1,38 +1,37 @@
 class Solution {
 
-    public int profit=0;
 
-    public int findProfit(int[] prices, int idx, int check,int[][] dp){
+    public int findMaxProfit(int[] prices, int[][] dp, int check,int idx){
 
-        if(idx==prices.length) return 0;
+            if(idx==prices.length) return 0;
 
-        if(dp[idx][check]!=-1) return dp[idx][check];
+            if(dp[idx][check]!=-1) return dp[idx][check];
 
-        if(check==0){
 
-            dp[idx][check] = Math.max(-prices[idx]+ findProfit(prices,idx+1,1,dp),findProfit(prices,idx+1,0,dp));
+            if(check==0){
 
-        }
-        else if(check==1){
+                return dp[idx][check] = Math.max(-prices[idx]+findMaxProfit(prices,dp,1,idx+1), findMaxProfit(prices,dp,0,idx+1));
+            }
+            else if(check==1){
 
-            dp[idx][check] = Math.max(prices[idx]+findProfit(prices,idx+1,0,dp),findProfit(prices,idx+1,1,dp));
-        }
+                return dp[idx][check] = Math.max(prices[idx]+findMaxProfit(prices,dp,0,idx+1),findMaxProfit(prices,dp,1,idx+1));
+            }
 
-        return dp[idx][check];
+            return dp[idx][check];
     }
     public int maxProfit(int[] prices) {
 
-        int[][] dp = new int[prices.length+1][2];
 
-        for(int i=0;i<=prices.length;i++){
+        int n = prices.length;
+
+        int[][] dp = new int[n+1][2];
+
+        for(int i=0;i<=n;i++){
 
             Arrays.fill(dp[i],-1);
         }
 
-        int n = prices.length;
-
-
-        return findProfit(prices,0,0,dp);
+        return findMaxProfit(prices,dp,0,0);
         
     }
 }
